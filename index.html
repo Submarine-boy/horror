@@ -102,6 +102,14 @@
   <div id="toast"></div>
   <canvas id="game"></canvas>
 
-  <script type="module" src="./src/main.js?v=20260929-3"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="./src/main.js?v=20260929-4"></script>
 </body>
 </html>
