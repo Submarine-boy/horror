@@ -119,16 +119,16 @@ class House {
     this.box("ceiling", 0,6.4,0, 26,.3,20, darkWood, false);
 
     // Exterior shell.
-    this.box("north wall", 0,3.1,-10, 26,6.2,.35, wall);
-    this.box("south wall", 0,3.1,10, 26,6.2,.35, wall);
+    this.box("north wall", 0,3.1,-10, 26,6.2,.35, wall, false);
+    this.box("south wall", 0,3.1,10, 26,6.2,.35, wall, false);
     this.box("west wall", -13,3.1,0, .35,6.2,20, wall);
     this.box("east wall", 13,3.1,0, .35,6.2,20, wall);
 
     // Internal architecture. Door-sized gaps are intentionally left.
-    this.box("hall divider", -4.7,3.1,-5, .35,6.2,10, plaster);
-    this.box("hall divider 2", 4.7,3.1,-5, .35,6.2,10, plaster);
-    this.box("lower divider", -7,3.1,5, 12,6.2,.35, plaster);
-    this.box("lower divider 2", 7,3.1,5, 12,6.2,.35, plaster);
+    this.box("hall divider", -4.7,3.1,-5, .35,6.2,10, plaster, false);
+    this.box("hall divider 2", 4.7,3.1,-5, .35,6.2,10, plaster, false);
+    this.box("lower divider", -7,3.1,5, 12,6.2,.35, plaster, false);
+    this.box("lower divider 2", 7,3.1,5, 12,6.2,.35, plaster, false);
 
     // Upstairs visual balcony.
     this.box("upper floor", 7,6.7,1, 12,.35,8, darkWood, true);
@@ -174,8 +174,8 @@ class House {
     this.item("archiveKey", "Archive Key", 8.5,1.9,6.8, 0xbca46a);
     this.item("gateKey", "Gate Key", 9.5,1.1,7.8, 0xd5b96d);
 
-    this.clue(-9.5,1.8,-7.6, "A handwritten note: "The basement machine needs one living circuit."");
-    this.clue(9.8,1.8,-7.5, "A torn card: "Archive access follows the bedroom clock."");
+    this.clue(-9.5,1.8,-7.6, "A handwritten note: \\"The basement machine needs one living circuit.\\"");
+    this.clue(9.8,1.8,-7.5, "A torn card: \\"Archive access follows the bedroom clock.\\"");
 
     // Electrical panel puzzle.
     const panel = this.box("electrical panel", -9,2.4,7.1, 1.4,2.3,.25, metal, false);
@@ -529,7 +529,7 @@ class Game {
     this.renderer.shadowMap.enabled=true;
     this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;
     this.clock=new THREE.Clock();
-    this.controls=new PointerLockControls(this.camera,document.body);
+    this.controls=new PointerLockControls(this.camera,document.body);\n    this.controls.pointerSpeed=settings.sensitivity;
     this.running=false;
     this.paused=false;
     this.finished=false;
@@ -604,7 +604,7 @@ class Game {
     $("volume").value=settings.volume;
     $("reduced-effects").checked=settings.reducedEffects;
 
-    $("sensitivity").oninput=e=>{settings.sensitivity=+e.target.value;saveSettings();};
+    $("sensitivity").oninput=e=>{settings.sensitivity=+e.target.value;this.controls.pointerSpeed=settings.sensitivity;saveSettings();};
     $("fov").oninput=e=>{settings.fov=+e.target.value;this.camera.fov=settings.fov;this.camera.updateProjectionMatrix();saveSettings();};
     $("volume").oninput=e=>{settings.volume=+e.target.value;if(audio.master)audio.master.gain.value=settings.volume;saveSettings();};
     $("reduced-effects").onchange=e=>{settings.reducedEffects=e.target.checked;saveSettings();};
