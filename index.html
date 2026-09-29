@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The House of Silence</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="loading">
+    <div class="loading-card">
+      <div class="eyebrow">AN ORIGINAL BROWSER HORROR GAME</div>
+      <h1>THE HOUSE OF SILENCE</h1>
+      <div class="loader"><span></span></div>
+      <p>Preparing the house...</p>
+    </div>
+  </div>
+
+  <div id="menu" class="screen hidden">
+    <div class="menu-backdrop"></div>
+    <div class="menu-card">
+      <div class="eyebrow">THE HOUSE OF SILENCE</div>
+      <h1>THE HOUSE<br><span>OF SILENCE</span></h1>
+      <p class="tagline">Something is still living inside.</p>
+      <div class="menu-buttons">
+        <button id="new-game">NEW GAME</button>
+        <button id="how-to">HOW TO PLAY</button>
+        <button id="settings">SETTINGS</button>
+      </div>
+      <div id="menu-help" class="menu-help hidden">
+        WASD move · Mouse look · E interact · F flashlight · Shift run · Ctrl crouch · Esc pause
+      </div>
+    </div>
+  </div>
+
+  <div id="hud" class="hidden">
+    <div class="objective">
+      <div class="hud-label">CURRENT OBJECTIVE</div>
+      <div id="objective-text">Find a way out.</div>
+    </div>
+    <div class="status">
+      <div class="battery"><span class="hud-label">FLASHLIGHT</span><strong id="battery-value">100%</strong></div>
+      <div class="stamina"><span class="hud-label">STAMINA</span><div class="bar"><span id="stamina-fill"></span></div></div>
+    </div>
+    <div id="crosshair"></div>
+    <div id="interaction"></div>
+    <div id="inventory"></div>
+    <div id="noise-indicator">●</div>
+    <div id="danger-vignette"></div>
+  </div>
+
+  <div id="start-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <h2>CLICK TO ENTER</h2>
+      <p>Mouse — Look · WASD — Move · E — Interact</p>
+      <p>F — Flashlight · Shift — Run · Ctrl — Crouch · Esc — Pause</p>
+    </div>
+  </div>
+
+  <div id="pause" class="screen hidden">
+    <div class="pause-card">
+      <div class="eyebrow">THE HOUSE IS LISTENING</div>
+      <h2>PAUSED</h2>
+      <button id="resume">RESUME</button>
+      <button id="restart">RESTART</button>
+      <button id="back-menu">MAIN MENU</button>
+    </div>
+  </div>
+
+  <div id="gameover" class="screen hidden">
+    <div class="pause-card">
+      <div class="eyebrow">THE WARDEN FOUND YOU</div>
+      <h2>YOU WERE CAUGHT</h2>
+      <p id="death-stats"></p>
+      <button id="retry">TRY AGAIN</button>
+      <button id="death-menu">MAIN MENU</button>
+    </div>
+  </div>
+
+  <div id="ending" class="screen hidden">
+    <div class="pause-card">
+      <div class="eyebrow">THE STORM IS FADING</div>
+      <h2>YOU ESCAPED</h2>
+      <p id="ending-stats"></p>
+      <button id="play-again">PLAY AGAIN</button>
+      <button id="ending-menu">MAIN MENU</button>
+    </div>
+  </div>
+
+  <div id="settings-panel" class="modal hidden">
+    <div class="modal-card">
+      <button class="close-modal" id="close-settings">×</button>
+      <h2>SETTINGS</h2>
+      <label>Mouse sensitivity <input id="sensitivity" type="range" min="0.5" max="2.5" step="0.1" value="1"></label>
+      <label>Field of view <input id="fov" type="range" min="65" max="95" step="1" value="76"></label>
+      <label>Master volume <input id="volume" type="range" min="0" max="1" step="0.05" value="0.6"></label>
+      <label class="check"><input id="reduced-effects" type="checkbox"> Reduced camera effects</label>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <canvas id="game"></canvas>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
