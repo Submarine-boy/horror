@@ -1,5 +1,5 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js";
-import { PointerLockControls } from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/controls/PointerLockControls.js";
+import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
 
 const $ = (id) => document.getElementById(id);
 const clamp = (v,a,b) => Math.max(a, Math.min(b,v));
