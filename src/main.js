@@ -174,8 +174,8 @@ class House {
     this.item("archiveKey", "Archive Key", 8.5,1.9,6.8, 0xbca46a);
     this.item("gateKey", "Gate Key", 9.5,1.1,7.8, 0xd5b96d);
 
-    this.clue(-9.5,1.8,-7.6, "A handwritten note: \\"The basement machine needs one living circuit.\\"");
-    this.clue(9.8,1.8,-7.5, "A torn card: \\"Archive access follows the bedroom clock.\\"");
+    this.clue(-9.5,1.8,-7.6, 'A handwritten note: "The basement machine needs one living circuit."');
+    this.clue(9.8,1.8,-7.5, 'A torn card: "Archive access follows the bedroom clock."');
 
     // Electrical panel puzzle.
     const panel = this.box("electrical panel", -9,2.4,7.1, 1.4,2.3,.25, metal, false);
@@ -529,7 +529,8 @@ class Game {
     this.renderer.shadowMap.enabled=true;
     this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;
     this.clock=new THREE.Clock();
-    this.controls=new PointerLockControls(this.camera,document.body);\n    this.controls.pointerSpeed=settings.sensitivity;
+    this.controls=new PointerLockControls(this.camera,document.body);
+    this.controls.pointerSpeed=settings.sensitivity;
     this.running=false;
     this.paused=false;
     this.finished=false;
