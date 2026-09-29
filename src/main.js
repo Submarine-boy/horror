@@ -219,7 +219,7 @@ class House {
     const bulb = new THREE.Mesh(new THREE.SphereGeometry(.13,10,8), new THREE.MeshBasicMaterial({color:0xffd8a0}));
     bulb.position.set(x,y-.25,z);
     this.scene.add(bulb);
-    const light = new THREE.PointLight(0xffd2a0, .8, 7, 2);
+    const light = new THREE.PointLight(0xffd2a0, 1.25, 9, 2);
     light.position.set(x,y-.25,z);
     this.scene.add(light);
     this.game.lights.push(light);
@@ -397,10 +397,10 @@ class Player {
       }
     }
 
+    // PointerLockControls owns the camera rotation. Do not overwrite its
+    // quaternion/rotation here, otherwise mouse look fights the controls.
     this.camera.position.copy(this.position);
     this.camera.position.y = this.crouched ? 1.05 : 1.65;
-    this.camera.rotation.x=this.pitch;
-    this.camera.rotation.y=this.yaw;
   }
 
   collides() {
@@ -521,7 +521,7 @@ class Game {
     this.canvas=$("game");
     this.scene=new THREE.Scene();
     this.scene.background=new THREE.Color(0x070908);
-    this.scene.fog=new THREE.FogExp2(0x0b0d0c,.055);
+    this.scene.fog=new THREE.FogExp2(0x0b0d0c,.032);
     this.camera=new THREE.PerspectiveCamera(settings.fov,innerWidth/innerHeight,.05,80);
     this.renderer=new THREE.WebGLRenderer({canvas:this.canvas,antialias:true,powerPreference:"high-performance"});
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
@@ -530,7 +530,7 @@ class Game {
     this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;
     this.clock=new THREE.Clock();
     this.controls=new PointerLockControls(this.camera,document.body);
-    this.controls.pointerSpeed=settings.sensitivity;
+    this.controls.pointerSpeed=settings.sensitivity * 0.85;
     this.running=false;
     this.paused=false;
     this.finished=false;
@@ -547,9 +547,13 @@ class Game {
   }
 
   setupWorld() {
-    const hemi=new THREE.HemisphereLight(0x667078,0x17120e,.32);
+    const hemi=new THREE.HemisphereLight(0x7d8790,0x242018,.58);
     this.scene.add(hemi);
-    const moon=new THREE.DirectionalLight(0x9fb0c5,.75);
+
+    const ambient=new THREE.AmbientLight(0x53605b,.24);
+    this.scene.add(ambient);
+
+    const moon=new THREE.DirectionalLight(0x9fb0c5,1.05);
     moon.position.set(-10,14,5);
     moon.castShadow=true;
     moon.shadow.mapSize.set(1024,1024);
@@ -560,11 +564,11 @@ class Game {
     this.player=new Player(this.camera,this.scene,this);
     this.warden=new Warden(this.scene,this);
 
-    this.flashlight=new THREE.SpotLight(0xe6f0ff,5.2,17,Math.PI/7,.55,1.5);
+    this.flashlight=new THREE.SpotLight(0xe6f0ff,8.5,24,Math.PI/6,.62,1.15);
     this.flashlight.position.set(0,1.55,0);
     this.camera.add(this.flashlight);
     this.camera.add(this.flashlight.target);
-    this.flashlight.target.position.set(0,1.2,-6);
+    this.flashlight.target.position.set(0,0,-12);
     this.flashlight.castShadow=false;
     this.scene.add(this.camera);
 
@@ -605,7 +609,11 @@ class Game {
     $("volume").value=settings.volume;
     $("reduced-effects").checked=settings.reducedEffects;
 
-    $("sensitivity").oninput=e=>{settings.sensitivity=+e.target.value;this.controls.pointerSpeed=settings.sensitivity;saveSettings();};
+    $("sensitivity").oninput=e=>{
+      settings.sensitivity=+e.target.value;
+      this.controls.pointerSpeed=settings.sensitivity * 0.85;
+      saveSettings();
+    };
     $("fov").oninput=e=>{settings.fov=+e.target.value;this.camera.fov=settings.fov;this.camera.updateProjectionMatrix();saveSettings();};
     $("volume").oninput=e=>{settings.volume=+e.target.value;if(audio.master)audio.master.gain.value=settings.volume;saveSettings();};
     $("reduced-effects").onchange=e=>{settings.reducedEffects=e.target.checked;saveSettings();};
